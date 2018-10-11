@@ -8,12 +8,9 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 import sys
 
-
-
-
 # librerias propias
 import mainwindowinterface
-
+import procesado_imagen
 
 class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
     def __init__(self):
@@ -22,7 +19,8 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         self.setupUi(self)
 
         # añadir la imagen
-        pixmap = QPixmap('image.jpg') #muestra una imagen en la label
+        procesado_imagen.image_stack()
+        pixmap = QPixmap('salida.jpg') #muestra una imagen en la label
         self.label_image1.setPixmap(pixmap)
 
 
