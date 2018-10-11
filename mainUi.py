@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 import sys
 
-from PIL import Image
+
 
 
 # librerias propias
@@ -24,6 +24,12 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         # añadir la imagen
         pixmap = QPixmap('image.jpg') #muestra una imagen en la label
         self.label_image1.setPixmap(pixmap)
+
+
+
+
+
+
 
 
 app = QtWidgets.QApplication(sys.argv)
