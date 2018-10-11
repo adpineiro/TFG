@@ -9,24 +9,26 @@ import cv2
 # carga las dos imagenes
 imagen1 = cv2.imread('image1.jpg',1)
 imagen2 = cv2.imread('image2.jpg')
-
-# obtiene medidas de las imagenes
-alto1, ancho1 = imagen1.shape[:2]
-alto2, ancho2 = imagen2.shape[:2]
-#altoout = alto1 + alto2
-anchoout = ancho1 + ancho2
-
-# crea una imagen vacia
-#salida = np.zeros((anchoout, alto1,3), np.uint8)
-
-# una imagen al lado de la otra
-#salida[0:alto1, 0:ancho1] = imagen1
-#salida[0:alto1, ancho1:anchoout] = imagen2
-#cv2.imwrite('salida.jpg', salida)
+imagen3 = cv2.imread('image3.jpg')
+imagen4 = cv2.imread('image4.jpg')
 
 
-#las imagenes son tratadas como matrices en cv2
-salida = np.vstack((imagen2,imagen1)) #concatena las dos matrices
+
+"""Las imagenes son tratadas como matrices en cv2. Por lo tanto, pueden ser tratadas con la librería numpy
+Se apilan las matrices siguiendo el siguiente orden
+    Imagen1   Imagen2
+    
+    Imagen3   Imagen4
+    
+    Se apila la imagen 1 y 2 por separado y despues 3 y 4, tambien por separado.
+    A continuacion, se apila la matriz 1-2 con la 3-4
+    """
+
+salida12 = np.hstack((imagen2, imagen1))  # apila las matrices 1 y 2
+salida34 = np.hstack((imagen3, imagen4))  # apila las matrices 3 y 4
+salida = np.vstack((salida12, salida34))  #resultante final
+cv2.imwrite('salida.jpg', salida)
+
 
 # muestra las imagenes
 cv2.imshow('Imagen', imagen1)
