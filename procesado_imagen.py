@@ -14,7 +14,7 @@ Se apilan las matrices siguiendo el siguiente orden
  """
 
 def image_stack():
-# carga las dos imagenes
+# carga las cuatro imagenes
     imagen1 = cv2.imread('imagen1.jpg')
     imagen2 = cv2.imread('imagen2.jpg')
     imagen3 = cv2.imread('imagen3.jpg')
@@ -24,9 +24,9 @@ def image_stack():
     salida34 = np.hstack((imagen3, imagen4))  # apila las matrices 3 y 4
     salida = np.vstack((salida12, salida34))  # resultante final
 
-    salida_red = cv2.resize(salida, (609, 449)) # tamaño del label
+    salida_red = cv2.resize(salida, (609, 449)) # ajusta al tamaño del label
     cv2.imwrite('salida.jpg', salida_red) # guarda el array de imagenes como jpg
-# muestra la imagen junta
+# muestra la imagen
     cv2.imshow('Imagen', salida_red)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
