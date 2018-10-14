@@ -19,7 +19,7 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         self.setupUi(self)
 
         # añadir la imagen
-        procesado_imagen.image_stack()
+        imagen = procesado_imagen.image_stack()
         pixmap = QPixmap('salida.jpg') #muestra una imagen en la label
         self.label_image1.setPixmap(pixmap)
 
