@@ -15,32 +15,20 @@ import procesado_imagen
 class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
-        super(MainWindow, self).__init__()
+        #super(MainWindow, self).__init__()
         self.setupUi(self)
 
         # inicializa mostrar las cámaras
-        self.__setup_imagen()
+
         self.__actualizar_imagen = QTimer()
-        self.__actualizar_imagen.timeout.connect(self.__imagen_actulizar)
-        # añadir la imagen
-
-    def __setup_imagen(self):
         t_refresco = 1000
-        self.__imagen_actualizar()
         self.__actualizar_imagen.start(t_refresco)
-
-
+        self.__actualizar_imagen.timeout.connect(self.__imagen_actualizar)
 
     def __imagen_actualizar(self):
         imagen = procesado_imagen.image_stack()
         pixmap = QPixmap('salida.jpg') #muestra una imagen en la label
         self.label_image1.setPixmap(pixmap)
-
-
-
-
-
-
 
 
 app = QtWidgets.QApplication(sys.argv)
