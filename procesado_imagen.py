@@ -20,12 +20,12 @@ def image_stack():
     imagen2 = cv2.imread('imagen2.jpg')
     imagen3 = cv2.imread('imagen3.jpg')
     imagen4 = cv2.imread('imagen4.jpg')
-    # Apila las imagenes
-    salida12 = np.hstack((imagen1, imagen2))  # apila las matrices 1 y 2 /TODO Cambiar de hstack a stack, usando axis= 0 o 1
-    salida34 = np.hstack((imagen3, imagen4))  # apila las matrices 3 y 4
-    salida = np.vstack((salida12, salida34))  # resultante final
+    # Apila las imagenes, se usa concatenate en vez de hstack y vstack al ser preferidas en la documantecion de la librería
+    salida12 = np.concatenate((imagen1, imagen2), axis=1)  # apila las matrices 1 y 2
+    salida34 = np.concatenate((imagen3, imagen4), axis=1)  # apila las matrices 3 y 4
+    salida = np.concatenate((salida12, salida34), axis=0)  # resultante final
 
-    salida_red = cv2.resize(salida, (609, 449))  # ajusta al tamaño del label
+    salida_red = cv2.resize(salida, (619, 459))  # ajusta al tamaño del label
     cv2.imwrite('salida.jpg', salida_red)  # guarda el array de imagenes como jpg
     # muestra la imagen
     #   cv2.imshow('Imagen', salida_red)
