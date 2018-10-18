@@ -25,6 +25,7 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         t_refresco = 1000
         self.__actualizar_imagen.start(t_refresco)
         self.__actualizar_imagen.timeout.connect(self.__imagen_actualizar)
+        self.actionSalir.triggered.connect(self.close)  # cierra la aplicacion
 
     def __imagen_actualizar(self):
         procesado_imagen.image_stack()

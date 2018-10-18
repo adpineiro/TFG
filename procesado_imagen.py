@@ -27,6 +27,7 @@ def image_stack():
 
     salida_red = cv2.resize(salida, (619, 459))  # ajusta al tamaño del label
     cv2.imwrite('salida.jpg', salida_red)  # guarda el array de imagenes como jpg
+
     # muestra la imagen
     #   cv2.imshow('Imagen', salida_red)
     #  cv2.waitKey(0)
