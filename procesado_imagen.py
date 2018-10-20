@@ -20,12 +20,14 @@ def image_stack():
     imagen2 = cv2.imread('imagen2.jpg')
     imagen3 = cv2.imread('imagen3.jpg')
     imagen4 = cv2.imread('imagen4.jpg')
-    # Apila las imagenes, se usa concatenate en vez de hstack y vstack al ser preferidas en la documantecion de la librería
+    # Stack the matrix using concatenate
     salida12 = np.concatenate((imagen1, imagen2), axis=1)  # apila las matrices 1 y 2
     salida34 = np.concatenate((imagen3, imagen4), axis=1)  # apila las matrices 3 y 4
     salida = np.concatenate((salida12, salida34), axis=0)  # resultante final
+    # calculate the best proportion to fit the label
 
-    salida_red = cv2.resize(salida, (619, 459))  # ajusta al tamaño del label
+    # resize the image to fit the label
+    salida_red = cv2.resize(salida, (640, 468))  # adjust the image to the label size
     cv2.imwrite('salida.jpg', salida_red)  # guarda el array de imagenes como jpg
 
     # muestra la imagen

@@ -25,18 +25,21 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         t_refresco = 1000
         self.__actualizar_imagen.start(t_refresco)
         self.__actualizar_imagen.timeout.connect(self.__imagen_actualizar)
-        self.actionSalir.triggered.connect(self.close)  # cierra la aplicacion
+        self.actionSalir.triggered.connect(self.close)  # close the app
         self.actionSobre.triggered.connect(self.about_message)
 
     def __imagen_actualizar(self):
         whidth = self.label.width()
         height = self.label.height()
-        procesado_imagen.image_stack(whidth,height)
-        pixmap = QPixmap('salida.jpg') #muestra una imagen en la label
+        procesado_imagen.image_stack()
+        # show the image on the label
+        pixmap = QPixmap('salida.jpg').scaled(whidth, height, QtCore.Qt.KeepAspectRatio)
         self.label.setPixmap(pixmap)
 
     def about_message(self):
-        about = QMessageBox.about(self, "About...", "Aplicación para el proyecto uvispace")
+        link = "https://uvispace.readthedocs.io/en/latest/"
+        message = "App for the uvispace project <br> <a href='%s'>Project Web</a>" % link
+        about = QMessageBox.about(self, "About...", message)
 
 
 
