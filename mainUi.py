@@ -29,9 +29,11 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         self.actionSobre.triggered.connect(self.about_message)
 
     def __imagen_actualizar(self):
-        procesado_imagen.image_stack()
+        whidth = self.label.width()
+        height = self.label.height()
+        procesado_imagen.image_stack(whidth,height)
         pixmap = QPixmap('salida.jpg') #muestra una imagen en la label
-        self.label_image1.setPixmap(pixmap)
+        self.label.setPixmap(pixmap)
 
     def about_message(self):
         about = QMessageBox.about(self, "About...", "Aplicación para el proyecto uvispace")
