@@ -27,8 +27,7 @@ class AppLogHandler(logging.Handler):
         logging.Handler.__init__(self)
         self.widget = widget
         self.setLevel(logging.DEBUG)
-        formatter = logging.Formatter(" %(asctime)s.%(msecs)03d %(levelname)8s:"
-                                      " %(message)s", "%H:%M:%S")
+        formatter = logging.Formatter(" %(asctime)s.%(msecs)03d %(levelname)8s:" " %(message)s", "%H:%M:%S")
         self.setFormatter(formatter)
         # Log messages colours.
         self.levelcolours = {
@@ -41,9 +40,9 @@ class AppLogHandler(logging.Handler):
         parent_path = os.path.dirname(__file__)
         self.logsymbols = {
             logging.DEBUG: "{}/icons/debug.png".format(parent_path),
-            logging.INFO: "{}/icons//info.png".format(parent_path),
-            logging.WARN: "{}/icons//warning.png".format(parent_path),
-            logging.ERROR: "{}/icons//error.png".format(parent_path),
+            logging.INFO: "{}/icons/info.png".format(parent_path),
+            logging.WARN: "{}/icons/warning.png".format(parent_path),
+            logging.ERROR: "{}/icons/error.png".format(parent_path),
         }
         # The True levels are the ones that are printed on the log.
         self.enabled = {
@@ -95,6 +94,10 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         # menu actions
         self.actionSalir.triggered.connect(self.close)  # close the app
         self.actionSobre.triggered.connect(self.about_message)
+        # activate the run mode, show the vehicle properties
+        self.rb_runmode.clicked.connect(self.activate_run_mode)
+        # activate the train mode
+        self.rb_trainmode.clicked.connect(self.activate_train_mode)
 
     def __imagen_actualizar(self):
         whidth = self.label.width()
@@ -109,6 +112,22 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         link = "https://uvispace.readthedocs.io/en/latest/"
         message = "App for the uvispace project <br> <a href='%s'>Project Web</a>" % link
         about = QMessageBox.about(self, "About...", message)
+
+    def activate_run_mode(self):
+        self.label_2.show()
+        self.label_3.show()
+        self.label_4.show()
+        self.label_5.show()
+        #self.label_6.show()
+        #self.label_7.show()
+
+    def activate_train_mode(self):
+        self.label_2.hide()
+        self.label_3.hide()
+        self.label_4.hide()
+        self.label_5.hide()
+        #self.label_6.hide()
+        #self.label_7.hide()
 
     def update_logger_level(self):
         """Evaluate the check boxes states and update logger level."""

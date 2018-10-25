@@ -1,17 +1,17 @@
-# librerias tratamiento imagen
-
+# image processing libraries
 import numpy as np
 import cv2
 
-"""Las imagenes son tratadas como matrices en cv2. Por lo tanto, pueden ser tratadas con la librería numpy
-Se apilan las matrices siguiendo el siguiente orden
-    Imagen1   Imagen2
-
-    Imagen3   Imagen4
-
-    Se apila la imagen 1 y 2 por separado y despues 3 y 4, tambien por separado.
-    A continuacion, se apila la matriz 1-2 con la 3-4
- """
+"""
+    Images are treated as arrays in cv2. Therefore, they can be formated with the numpy library.
+    Images are stacked using the given path:
+    Image1         Image2
+    
+    Image3         Image4
+    
+    First, image1 and 2 are stack, then image 3 and 4.
+    Finally, the 4 images are joined
+"""
 
 
 def image_stack():
