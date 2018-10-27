@@ -14,6 +14,7 @@ import os
 # librerias propias
 import mainwindowinterface
 import procesado_imagen
+import load_csv
 
 # Create the application logger
 logger = logging.getLogger('view')
@@ -76,7 +77,7 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         QtWidgets.QMainWindow.__init__(self)
         # super(MainWindow, self).__init__()
         self.setupUi(self)
-
+        self.popup = None
         # Configure the logger, assigning an instance of AppLogHandler.
         self.log_handler = AppLogHandler(self.LoggerBrowser)
         logger.addHandler(self.log_handler)
@@ -94,17 +95,18 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         # menu actions
         self.actionSalir.triggered.connect(self.close)  # close the app
         self.actionSobre.triggered.connect(self.about_message)
+        self.actionOpen_csv.triggered.connect(self.load_csv_window)
         # activate the run mode, show the vehicle properties
         self.rb_runmode.clicked.connect(self.activate_run_mode)
         # activate the train mode
         self.rb_trainmode.clicked.connect(self.activate_train_mode)
 
     def __imagen_actualizar(self):
-        whidth = self.label.width()
+        width = self.label.width()
         height = self.label.height()
         procesado_imagen.image_stack()
         # show the image on the label
-        pixmap = QPixmap('salida.jpg').scaled(whidth, height, QtCore.Qt.KeepAspectRatio)
+        pixmap = QPixmap('salida.jpg').scaled(width, height, QtCore.Qt.KeepAspectRatio)
         self.label.setPixmap(pixmap)
         logger.info("Imagen actualizada")
 
@@ -113,21 +115,28 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         message = "App for the uvispace project <br> <a href='%s'>Project Web</a>" % link
         about = QMessageBox.about(self, "About...", message)
 
+    def load_csv_window(self):
+        logger.debug("Open file load window")
+        self.popup = load_csv.App()
+        #self.popup.exec()
+        self.popup = None
+        return
+
     def activate_run_mode(self):
         self.label_2.show()
         self.label_3.show()
         self.label_4.show()
         self.label_5.show()
-        #self.label_6.show()
-        #self.label_7.show()
+        self.label_6.show()
+        self.label_7.show()
 
     def activate_train_mode(self):
         self.label_2.hide()
         self.label_3.hide()
         self.label_4.hide()
         self.label_5.hide()
-        #self.label_6.hide()
-        #self.label_7.hide()
+        self.label_6.hide()
+        self.label_7.hide()
 
     def update_logger_level(self):
         """Evaluate the check boxes states and update logger level."""
