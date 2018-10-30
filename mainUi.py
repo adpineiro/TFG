@@ -95,13 +95,21 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         # menu actions
         self.actionSalir.triggered.connect(self.close)  # close the app
         self.actionSobre.triggered.connect(self.about_message)
-        self.actionOpen_csv.triggered.connect(self.load_csv_window)
+        self.actionOpen_csv.triggered.connect(self.__loadfileswindow)
         # activate the run mode, show the vehicle properties
         self.rb_runmode.clicked.connect(self.activate_run_mode)
         # activate the train mode
         self.rb_trainmode.clicked.connect(self.activate_train_mode)
 
+    def __loadfileswindow(self):
+        # opens a new window to load a .csv file
+        logger.debug("Opening file loading window")
+        self.popup = load_csv.App()
+        self.popup.show()
+        return
+
     def __imagen_actualizar(self):
+        # refresh the image
         width = self.label.width()
         height = self.label.height()
         procesado_imagen.image_stack()
@@ -111,16 +119,10 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         logger.info("Imagen actualizada")
 
     def about_message(self):
+        # about message with a link to the main project web
         link = "https://uvispace.readthedocs.io/en/latest/"
         message = "App for the uvispace project <br> <a href='%s'>Project Web</a>" % link
         about = QMessageBox.about(self, "About...", message)
-
-    def load_csv_window(self):
-        logger.debug("Open file load window")
-        self.popup = load_csv.App()
-        #self.popup.exec()
-        self.popup = None
-        return
 
     def activate_run_mode(self):
         self.label_2.show()
