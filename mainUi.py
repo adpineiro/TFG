@@ -13,7 +13,7 @@ import os
 
 # librerias propias
 import mainwindowinterface
-import procesado_imagen
+import image_procesing
 import load_csv
 
 # Create the application logger
@@ -69,6 +69,7 @@ class AppLogHandler(logging.Handler):
                                            colour=self.levelcolours[record.levelno],
                                            log_msg=new_log))
             self.widget.moveCursor(QtGui.QTextCursor.End)
+
             return
 
 
@@ -89,17 +90,14 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         self.ErrorCheck.clicked.connect(self.update_logger_level)
         # initialise the QTimer to update the cameras image
         self.__actualizar_imagen = QTimer()
-        t_refresco = 1000
+        t_refresco = 100
         self.__actualizar_imagen.start(t_refresco)
         self.__actualizar_imagen.timeout.connect(self.__imagen_actualizar)
         # menu actions
         self.actionSalir.triggered.connect(self.close)  # close the app
-        self.actionSobre.triggered.connect(self.about_message)
+        self.action_about.triggered.connect(self.about_message)
         self.actionOpen_csv.triggered.connect(self.__loadfileswindow)
-        # activate the run mode, show the vehicle properties
-        self.rb_runmode.clicked.connect(self.activate_run_mode)
-        # activate the train mode
-        self.rb_trainmode.clicked.connect(self.activate_train_mode)
+        #resize window event
 
     def __loadfileswindow(self):
         # opens a new window to load a .csv file
@@ -109,13 +107,23 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         return
 
     def __imagen_actualizar(self):
-        # refresh the image
-        width = self.label.width()
-        height = self.label.height()
-        procesado_imagen.image_stack()
-        # show the image on the label
-        pixmap = QPixmap('salida.jpg').scaled(width, height, QtCore.Qt.KeepAspectRatio)
+        """ refresh the image label
+            calls the image_stack method to join the four cameras
+
+        """
+        height = int(self.label.height())
+        width = int(height*1.333)
+        image_procesing.image_stack(width, height)
+        #gets the size of the label and sends it to
+        pixmap = QPixmap('salida.jpg').scaled(self.label.size(),
+                                              aspectRatioMode= QtCore.Qt.KeepAspectRatio,
+                                              transformMode = QtCore.Qt.SmoothTransformation)
+
         self.label.setPixmap(pixmap)
+
+        #self.label.resize(width, height)
+        self.label.adjustSize()
+        self.label.setScaledContents(True)
         logger.info("Imagen actualizada")
 
     def about_message(self):
@@ -123,22 +131,6 @@ class MainWindow(QtWidgets.QMainWindow, mainwindowinterface.Ui_MainWindow):
         link = "https://uvispace.readthedocs.io/en/latest/"
         message = "App for the uvispace project <br> <a href='%s'>Project Web</a>" % link
         about = QMessageBox.about(self, "About...", message)
-
-    def activate_run_mode(self):
-        self.label_2.show()
-        self.label_3.show()
-        self.label_4.show()
-        self.label_5.show()
-        self.label_6.show()
-        self.label_7.show()
-
-    def activate_train_mode(self):
-        self.label_2.hide()
-        self.label_3.hide()
-        self.label_4.hide()
-        self.label_5.hide()
-        self.label_6.hide()
-        self.label_7.hide()
 
     def update_logger_level(self):
         """Evaluate the check boxes states and update logger level."""
