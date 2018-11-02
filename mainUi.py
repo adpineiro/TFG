@@ -17,8 +17,8 @@ import image_procesing
 import load_csv
 
 # Create the application logger
-logger = logging.getLogger('view')
-
+logging.basicConfig(filename='logfile.log')
+logger=logging.getLogger(__name__)
 
 class AppLogHandler(logging.Handler):
     """
@@ -26,19 +26,18 @@ class AppLogHandler(logging.Handler):
     """
     def __init__(self, widget):
         logging.Handler.__init__(self)
-        self.widget = widget
         self.setLevel(logging.DEBUG)
         formatter = logging.Formatter(" %(asctime)s.%(msecs)03d %(levelname)8s:" " %(message)s", "%H:%M:%S")
         self.setFormatter(formatter)
         # Log messages colours.
-        self.levelcolours = {
+        """self.levelcolours = {
             logging.DEBUG: 'black',
             logging.INFO: 'blue',
             logging.WARN: 'orange',
             logging.ERROR: 'red',
         }
         # Paths to the log icons.
-        parent_path = os.path.dirname(__file__)
+         parent_path = os.path.dirname(__file__)
         self.logsymbols = {
             logging.DEBUG: "{}/icons/debug.png".format(parent_path),
             logging.INFO: "{}/icons/info.png".format(parent_path),
@@ -51,7 +50,7 @@ class AppLogHandler(logging.Handler):
             logging.INFO: True,
             logging.WARN: True,
             logging.ERROR: True,
-        }
+        }"""
 
         def emit(self, record):
             """Override the logging.Handler.emit method.
@@ -63,12 +62,13 @@ class AppLogHandler(logging.Handler):
             if not self.enabled[record.levelno]:
                 return
             new_log = self.format(record)
-            self.widget.insertHtml('<img src={img} height="14" width="14"/>'
-                                   '<font color="{colour}">{log_msg}</font><br />'
-                                   .format(img=self.logsymbols[record.levelno],
-                                           colour=self.levelcolours[record.levelno],
-                                           log_msg=new_log))
-            self.widget.moveCursor(QtGui.QTextCursor.End)
+            #self.widget.insertHtml('<img src={img} height="14" width="14"/>'
+             #                      '<font color="{colour}">{log_msg}</font><br />'
+              #                     .format(img=self.logsymbols[record.levelno],
+               #                            colour=self.levelcolours[record.levelno],
+                #                           log_msg=new_log))
+            #self.widget.moveCursor(QtGui.QTextCursor.End)
+
 
             return
 
