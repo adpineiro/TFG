@@ -26,11 +26,11 @@ class App(QWidget, loadfilesinterface.Ui_Form):
                                                   "CSV files (*.csv);;All Files(*)", options=options)
         if fileName:
             print(fileName)
-            coordenadas = np.loadtxt(open(fileName, "r"), delimiter=";")
-            # print(coordenadas)
+            coordinates = np.loadtxt(open(fileName, "r"), delimiter=";")
+            # print(coordinates)
             print("Fila 9 Columna 1")
-            print(coordenadas[9, 1])
-            self.textEdit.setText(str(coordenadas))
+            print(coordinates[9, 1])
+            self.textEdit.setText(str(coordinates))
         return
 
 

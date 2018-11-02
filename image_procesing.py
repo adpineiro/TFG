@@ -19,7 +19,7 @@ import sys
 
 
 
-def image_stack():
+def image_stack(widht, height):
     # load the four images
     #imagen1 = get_images(1, "BIN")
     #imagen2 = imagen1
@@ -33,7 +33,7 @@ def image_stack():
     output12 = np.concatenate((image1, image2), axis=1)  # apila las matrices 1 y 2
     output34 = np.concatenate((image3, image4), axis=1)  # apila las matrices 3 y 4
     output = np.concatenate((output12, output34), axis=0)  # resultante final
-
+    #resized = cv2.resize(output, (widht, height), interpolation=cv2.INTER_AREA)
     cv2.imwrite('salida.jpg', output)  # saves the image as jpg
     # show the image
     #   cv2.imshow('Imagen', salida_red)
